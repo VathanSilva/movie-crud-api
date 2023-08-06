@@ -3,7 +3,6 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const app = express();
 require('dotenv').config()
-const upload = require('./multerConfig');
 
 app.use(express.json());
 app.use(cors());
@@ -33,7 +32,7 @@ app.get("/movies", (req,res)=>{
   })
 })
 
-app.post("/movies", upload.single('image'), (req, res) => {
+app.post("/movies", (req, res) => {
   console.log(req.file);
   const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`,`image`) VALUES (?)";
   const values = [
@@ -42,7 +41,7 @@ app.post("/movies", upload.single('image'), (req, res) => {
     req.body.budget,
     req.body.cast,
     req.body.imdbrate,
-    req.file.path,
+    req.file.image,
   ];
 
   db.query(q, [values], (err, data) => {
@@ -62,7 +61,7 @@ app.delete("/movies/:id", (req, res) => {
   });
 });
 
-app.put("/movies/:id", upload.single('image'), (req, res) => {
+app.put("/movies/:id", (req, res) => {
   const movieId = req.params.id;
   const q = "UPDATE movies SET `movieName` = ?, `director` = ?, `budget` = ?, `cast` = ?, `imdbrate` = ?, `image` = ? WHERE id = ?";
 
@@ -72,7 +71,7 @@ app.put("/movies/:id", upload.single('image'), (req, res) => {
     req.body.budget,
     req.body.cast,
     req.body.imdbrate,
-    req.file.path,
+    req.file.image,
   ];
 
   db.query(q, [...values, movieId], (err, data) => {
