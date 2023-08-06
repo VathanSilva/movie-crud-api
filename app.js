@@ -60,13 +60,13 @@ app.delete("/movies/:id", (req, res) => {
 
 app.put("/movies/:id", (req, res) => {
   const movieId = req.params.id;
-  const q = "UPDATE movies SET `movieName` = ?, `director` = ?, `budget` = ?, `moviePic` = ?, `imdbrate` = ? WHERE id = ?";
+  const q = "UPDATE movies SET `movieName` = ?, `director` = ?, `budget` = ?, `cast` = ?, `imdbrate` = ? WHERE id = ?";
 
   const values = [
     req.body.movieName,
     req.body.director,
     req.body.budget,
-    req.body.moviePic,
+    req.body.cast,
     req.body.imdbrate,
   ];
 
