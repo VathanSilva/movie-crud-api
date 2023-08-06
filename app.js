@@ -33,12 +33,12 @@ app.get("/movies", (req,res)=>{
 })
 
 app.post("/movies", (req, res) => {
-  const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`moviePic`,`imdbrate`) VALUES (?)";
+  const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`) VALUES (?)";
   const values = [
     req.body.movieName,
     req.body.director,
     req.body.budget,
-    req.body.moviePic,
+    req.body.cast,
     req.body.imdbrate,
   ];
 
