@@ -72,7 +72,7 @@ app.delete("/movies/:id", (req, res) => {
   });
 });
 
-app.put("/movies/:id", (req, res) => {
+app.put("/movies/:id", upload.single('image'), (req, res) => {
   const movieId = req.params.id;
   const q = "UPDATE movies SET `movieName` = ?, `director` = ?, `budget` = ?, `cast` = ?, `imdbrate` = ?, `image` = ? WHERE id = ?";
 
@@ -82,7 +82,7 @@ app.put("/movies/:id", (req, res) => {
     req.body.budget,
     req.body.cast,
     req.body.imdbrate,
-    req.body.image,
+    req.file.path,
   ];
 
   db.query(q, [...values,movieId], (err, data) => {
