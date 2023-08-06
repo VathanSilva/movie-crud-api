@@ -17,14 +17,14 @@ const db = mysql.createConnection({
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, 'movies/');
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
 });
 
-const upload = multer({ storage: storage });
+const movies = multer({ storage: storage });
 
 const port = process.env.PORT || 8206;
 
@@ -44,7 +44,7 @@ app.get("/movies", (req,res)=>{
   })
 })
 
-app.post("/movies", upload.single('image'), (req, res) => {
+app.post("/movies", movies.single('image'), (req, res) => {
   const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`,`image`) VALUES (?)";
   const values = [
     req.body.movieName,
