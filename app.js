@@ -44,24 +44,38 @@ app.get("/movies", (req,res)=>{
   })
 })
 
-app.post("/movies", upload.single('image'), (req, res) => {
-  console.log(req.file);
-  const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`,`image`) VALUES (?)";
-  const values = [
-    req.body.movieName,
-    req.body.director,
-    req.body.budget,
-    req.body.cast,
-    req.body.imdbrate,
-    req.file.path,
-  ];
-
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    console.log("Movie has been created successfully.");
-    return res.json("Movie has been created successfully.");
+app.post('/movies', upload.single('image'), (req, res) => {
+  const { movieName, director, budget, cast, imdbrate } = req.body;
+  const image = req.file.path; // Assuming the image is stored in the 'uploads/' directory
+  const sql = 'INSERT INTO movies (movieName, director, budget, cast, imdbrate, image) VALUES (?, ?, ?, ?, ?, ?)';
+  db.query(sql, [movieName, director, budget, cast, imdbrate, image], (err, result) => {
+    if (err) {
+      console.error('Error inserting movie:', err);
+      res.status(500).json({ error: 'Failed to insert movie' });
+    } else {
+      res.json({ success: true, message: 'Movie added successfully' });
+    }
   });
 });
+
+// app.post("/movies", upload.single('image'), (req, res) => {
+//   console.log(req.file);
+//   const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`,`image`) VALUES (?)";
+//   const values = [
+//     req.body.movieName,
+//     req.body.director,
+//     req.body.budget,
+//     req.body.cast,
+//     req.body.imdbrate,
+//     req.file.path,
+//   ];
+
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     console.log("Movie has been created successfully.");
+//     return res.json("Movie has been created successfully.");
+//   });
+// });
 
 app.delete("/movies/:id", (req, res) => {
   const movieId = req.params.id;
