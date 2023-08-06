@@ -45,7 +45,7 @@ app.get("/movies", (req,res)=>{
 })
 
 app.post("/movies", upload.single('image'), (req, res) => {
-  console.log(q.image.files);
+  console.log(req.file);
   const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`,`image`) VALUES (?)";
   const values = [
     req.body.movieName,
@@ -58,6 +58,7 @@ app.post("/movies", upload.single('image'), (req, res) => {
 
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
+    console.log("Movie has been created successfully.");
     return res.json("Movie has been created successfully.");
   });
 });
@@ -85,8 +86,9 @@ app.put("/movies/:id", upload.single('image'), (req, res) => {
     req.file.path,
   ];
 
-  db.query(q, [...values,movieId], (err, data) => {
+  db.query(q, [...values, movieId], (err, data) => {
     if (err) return res.json(err);
+    console.log("Movie has been updated successfully.");
     return res.json("Movie has been updated successfully.");
   });
 });
