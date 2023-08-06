@@ -33,7 +33,6 @@ app.get("/movies", (req,res)=>{
 })
 
 app.post("/movies", (req, res) => {
-  console.log(req.file);
   const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`,`image`) VALUES (?)";
   const values = [
     req.body.movieName,
@@ -41,7 +40,7 @@ app.post("/movies", (req, res) => {
     req.body.budget,
     req.body.cast,
     req.body.imdbrate,
-    req.file.image,
+    req.body.image,
   ];
 
   db.query(q, [values], (err, data) => {
@@ -71,7 +70,7 @@ app.put("/movies/:id", (req, res) => {
     req.body.budget,
     req.body.cast,
     req.body.imdbrate,
-    req.file.image,
+    req.body.image,
   ];
 
   db.query(q, [...values, movieId], (err, data) => {
