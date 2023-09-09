@@ -29,6 +29,7 @@
     "mysql2": "^2.3.3",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.22",
+    "path": "^0.12.7",
     "sequelize": "^6.24.0",
     "sequelize-cli": "^6.5.1",
     "uuidv4": "^6.2.13",

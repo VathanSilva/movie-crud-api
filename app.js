@@ -40,7 +40,6 @@ app.post("/movies", (req, res) => {
     req.body.budget,
     req.body.cast,
     req.body.imdbrate,
-    req.body.image,
   ];
 
   db.query(q, [values], (err, data) => {
@@ -70,7 +69,6 @@ app.put("/movies/:id", (req, res) => {
     req.body.budget,
     req.body.cast,
     req.body.imdbrate,
-    req.body.image,
   ];
 
   db.query(q, [...values, movieId], (err, data) => {
