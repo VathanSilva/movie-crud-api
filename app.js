@@ -33,7 +33,7 @@ app.get("/movies", (req,res)=>{
 })
 
 app.post("/movies", (req, res) => {
-  const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`,`image`) VALUES (?)";
+  const q = "INSERT INTO movies (`movieName`,`director`,`budget`,`cast`,`imdbrate`) VALUES (?)";
   const values = [
     req.body.movieName,
     req.body.director,
@@ -61,7 +61,7 @@ app.delete("/movies/:id", (req, res) => {
 
 app.put("/movies/:id", (req, res) => {
   const movieId = req.params.id;
-  const q = "UPDATE movies SET `movieName` = ?, `director` = ?, `budget` = ?, `cast` = ?, `imdbrate` = ?, `image` = ? WHERE id = ?";
+  const q = "UPDATE movies SET `movieName` = ?, `director` = ?, `budget` = ?, `cast` = ?, `imdbrate` = ? WHERE id = ?";
 
   const values = [
     req.body.movieName,
